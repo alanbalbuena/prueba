@@ -12,15 +12,15 @@
 @endif
 <div class="form-row">
     <div class="form-group col-md-6">
-        <input type="number" step=0.01 class="form-control" id="txtToneladas" placeholder="Toneladas" name="txtToneladas" required onkeyup="CalcularEntrega()">
+        <input type="number" step=0.01 class="form-control" id="toneladas" placeholder="Toneladas" name="toneladas" onkeyup="CalcularEntrega()">
     </div>
     <div class="form-group col-md-6">
-        <input type="number" class="form-control" id="txtPrecioPorTonelada" placeholder="Precio" name="txtPrecioPorTonelada" required onkeyup="CalcularEntrega()">
+        <input type="number" class="form-control" id="precio" placeholder="Precio" name="precio" onkeyup="CalcularEntrega()">
     </div>
 </div>
 <div class="form-row">
     <div class="form-group col-md-12">
-        <input class="form-control" list="datalistChoferes" id="listChofer" placeholder="Chofer" name="txtChofer" required onchange="setPorcentage()">
+        <input class="form-control" list="datalistChoferes" id="chofer" placeholder="Chofer" name="txtChofer" onchange="setPorcentage()">
         <datalist id="datalistChoferes">
             @foreach($choferes as $chofer)            
             <option data-id="{{ $chofer->porcentaje}}" value="{{$chofer->nombre}}"></option>
@@ -59,7 +59,7 @@
 </div>
 <div class="form-row">
     <div class="form-group col-md-12">
-        <input class="form-control" list="datalistEmpresas" id="listEmpresa" placeholder="Empresa" name="txtEmpresa" required>
+        <input class="form-control" list="datalistEmpresas" id="empresa" placeholder="Empresa" name="empresa">
         <datalist id="datalistEmpresas">
             @foreach($empresas as $empresa)            
                 <option data-id="{{ $empresa->id}}" value="{{$empresa->nombre}}"></option>
@@ -69,7 +69,7 @@
 </div>
 <div class="form-row">
     <div class="form-group col-md-12">
-        <input class="form-control" list="datalistEntregas" id="listEntregas" placeholder="Lugar de Entrega" name="txtEntrega" required>
+        <input class="form-control" list="datalistEntregas" id="entrega" placeholder="Lugar de Entrega" name="entrega">
         <datalist id="datalistEntregas">
             @foreach($lugares as $lugar)            
                 <option data-id="{{ $lugar->id}}" value="{{$lugar->nombre}}"></option>
@@ -127,7 +127,7 @@
     });
 
     function setPorcentage() {
-        var porcentageChofer = $('#datalistChoferes').find("option[value='" + $('#listChofer').val() + "']").attr('data-id');
+        var porcentageChofer = $('#datalistChoferes').find("option[value='" + $('#chofer').val() + "']").attr('data-id');
         console.log(porcentageChofer);
         $("#porcentage" + porcentageChofer).prop('checked', true);
         CalcularEntrega();
@@ -135,13 +135,13 @@
 
     function CalcularEntrega() {
 
-        var toneladas = document.getElementById("txtToneladas").value;
-        var precioPorTonelada = document.getElementById("txtPrecioPorTonelada").value;
+        var toneladas = document.getElementById("toneladas").value;
+        var precioPorTonelada = document.getElementById("precio").value;
         var porcentaje = $('input[name=radioPorcentaje]:checked').val();
         var seguro = $('input[name=radioSeguro]:checked').val();
         var transferencia = $("#txtTransferencia").val();
         var disel = $("#txtDisel").val();
-        var porcentageChofer = $('#datalistChoferes').find("option[value='" + $('#listChofer').val() + "']").attr('data-id');
+        var porcentageChofer = $('#datalistChoferes').find("option[value='" + $('#chofer').val() + "']").attr('data-id');
 
         if (toneladas.length > 0 && precioPorTonelada.length > 0 && porcentageChofer != undefined) {
 

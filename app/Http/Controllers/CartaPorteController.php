@@ -43,23 +43,25 @@ class CartaPorteController extends Controller
     public function store(Request $request)
     {
         //
-        /* $campos = [
-            'nombre' => 'required|string|max:100',
-            'codigo' => 'required|string|max:100',
-            'porcentaje' => 'required|int|max:10',
+        $campos = [
+            'toneladas' => 'required|string|max:100',
+            'precio' => 'required|string|max:100',
+            'chofer' => 'required|string|max:100',
+            'empresa' => 'required|string|max:100',
+            'entrega' => 'required|string|max:100',
         ];
         $mensaje = [
-            'required' => 'El :attribute es requerido'
+            'required' => 'El campo :attribute es requerido'
         ];
-        $this->validate($request, $campos, $mensaje); */
+        $this->validate($request, $campos, $mensaje);
         
         $datos = [
-            'toneladas' => $request->txtToneladas,
-            'precioPorTonelada' => $request->txtPrecioPorTonelada,
+            'toneladas' => $request->toneladas,
+            'precioPorTonelada' => $request->precio,
             'precioPorSeguro' => $request->radioSeguro,
-            'chofer' => $request->txtChofer,
+            'chofer' => $request->chofer,
             'nombre' => '',
-            'empresa' => $request->txtEmpresa,
+            'empresa' => $request->empresa,
             'identificadorCartaPorte' => $request->txtCartaPorte,
             'totalFlete' => $request->txtSubTotal,
             'totalEntregado' => $request->txtEntregar,
@@ -73,7 +75,7 @@ class CartaPorteController extends Controller
             'reFactura' => '0',
             'compro' => 'ANGEL',
             'remision' => $request->txtRemisiones,
-            'entrega' => $request->txtEntrega,
+            'entrega' => $request->entrega,
             'estatusPago' => 'PENDIENTE'
         ];
         CartaPorte::insert($datos);
