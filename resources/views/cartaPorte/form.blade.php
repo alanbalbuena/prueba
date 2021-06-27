@@ -12,15 +12,15 @@
 @endif
 <div class="form-row">
     <div class="form-group col-md-6">
-        <input type="number" step=0.01 class="form-control" id="toneladas" placeholder="Toneladas" name="toneladas" onkeyup="CalcularEntrega()">
+        <input type="number" step=0.01 class="form-control" id="toneladas" placeholder="Toneladas" name="toneladas" onkeyup="CalcularEntrega()" value="{{ isset($cartaPorte->toneladas) ? $cartaPorte->toneladas : old('toneladas')}}">
     </div>
     <div class="form-group col-md-6">
-        <input type="number" class="form-control" id="precio" placeholder="Precio" name="precio" onkeyup="CalcularEntrega()">
+        <input type="number" class="form-control" id="precio" placeholder="Precio" name="precio" onkeyup="CalcularEntrega()" value="{{ isset($cartaPorte->precioPorTonelada) ? $cartaPorte->precioPorTonelada : old('precio')}}">
     </div>
 </div>
 <div class="form-row">
     <div class="form-group col-md-12">
-        <input class="form-control" list="datalistChoferes" id="chofer" placeholder="Chofer" name="txtChofer" onchange="setPorcentage()">
+        <input class="form-control" list="datalistChoferes" id="chofer" placeholder="Chofer" name="chofer" onchange="setPorcentage()" value="{{ isset($cartaPorte->chofer) ? $cartaPorte->chofer : old('chofer')}}">
         <datalist id="datalistChoferes">
             @foreach($choferes as $chofer)            
             <option data-id="{{ $chofer->porcentaje}}" value="{{$chofer->nombre}}"></option>
@@ -31,16 +31,16 @@
 <div class="form-row">
     <div class="form-group col-md-12">
         <label class="radio-inline">
-            <input type="radio" name="radioPorcentaje" id="porcentage0" value="0">0%
+            <input type="radio" name="porcentaje" id="porcentage0" value="0">0%
         </label>
         <label class="radio-inline">
-            <input type="radio" name="radioPorcentaje" id="porcentage4" value="4">4%
+            <input type="radio" name="porcentaje" id="porcentage4" value="4">4%
         </label>
         <label class="radio-inline">
-            <input type="radio" name="radioPorcentaje" id="porcentage8" value="8">8%
+            <input type="radio" name="porcentaje" id="porcentage8" value="8">8%
         </label>
         <label class="radio-inline">
-            <input type="radio" name="radioPorcentaje" id="porcentage10" value="10">10%
+            <input type="radio" name="porcentaje" id="porcentage10" value="10">10%
         </label>
     </div>
 </div>
@@ -59,7 +59,7 @@
 </div>
 <div class="form-row">
     <div class="form-group col-md-12">
-        <input class="form-control" list="datalistEmpresas" id="empresa" placeholder="Empresa" name="empresa">
+        <input class="form-control" list="datalistEmpresas" id="empresa" placeholder="Empresa" name="empresa" value="{{ isset($cartaPorte->empresa) ? $cartaPorte->empresa : old('empresa')}}">
         <datalist id="datalistEmpresas">
             @foreach($empresas as $empresa)            
                 <option data-id="{{ $empresa->id}}" value="{{$empresa->nombre}}"></option>
@@ -69,7 +69,7 @@
 </div>
 <div class="form-row">
     <div class="form-group col-md-12">
-        <input class="form-control" list="datalistEntregas" id="entrega" placeholder="Lugar de Entrega" name="entrega">
+        <input class="form-control" list="datalistEntregas" id="entrega" placeholder="Lugar de Entrega" name="entrega" value="{{ isset($cartaPorte->entrega) ? $cartaPorte->entrega : old('entrega')}}">
         <datalist id="datalistEntregas">
             @foreach($lugares as $lugar)            
                 <option data-id="{{ $lugar->id}}" value="{{$lugar->nombre}}"></option>
@@ -79,12 +79,12 @@
 </div>
 <div class="form-row">
     <div class="form-group col-md-12">
-        <input type="text" class="form-control" id="txtCartaPorte" placeholder="CartaPortes" name="txtCartaPorte">
+        <input type="text" class="form-control" id="txtCartaPorte" placeholder="CartaPortes" name="txtCartaPorte" value="{{ isset($cartaPorte->identificadorCartaPorte) ? $cartaPorte->identificadorCartaPorte : old('txtCartaPorte')}}">
     </div>
 </div>
 <div class="form-row">
     <div class="form-group col-md-12">
-        <input type="text" class="form-control" id="txtRemisiones" placeholder="Remisiones" name="txtRemisiones">
+        <input type="text" class="form-control" id="txtRemisiones" placeholder="Remisiones" name="txtRemisiones" value="{{ isset($cartaPorte->remision) ? $cartaPorte->remision : old('txtRemisiones')}}">
     </div>
 </div>
 <div class="form-row">
@@ -96,7 +96,7 @@
 <div class="form-row">
     <label class="col-sm-3 col-form-label">Transferencia</label>
     <div class="form-group col-md-9">
-        <input type="number" class="form-control" id="txtTransferencia" name="txtTransferencia" placeholder="Transferencia" onkeyup="CalcularEntrega()">
+        <input type="number" step=0.01 class="form-control" id="txtTransferencia" name="txtTransferencia" placeholder="Transferencia" onkeyup="CalcularEntrega()">
     </div>
 </div>
 <div class="form-row">
@@ -117,13 +117,14 @@
 
 <script>
     $(document).ready(function() {
-        $('input:radio[name=radioPorcentaje]').change(function() {
+        $('input:radio[name=porcentaje]').change(function() {
             CalcularEntrega();
         });
 
         $('input:radio[name=radioSeguro]').change(function() {
             CalcularEntrega();
         });
+        setPorcentage();
     });
 
     function setPorcentage() {
@@ -137,7 +138,7 @@
 
         var toneladas = document.getElementById("toneladas").value;
         var precioPorTonelada = document.getElementById("precio").value;
-        var porcentaje = $('input[name=radioPorcentaje]:checked').val();
+        var porcentaje = $('input[name=porcentaje]:checked').val();
         var seguro = $('input[name=radioSeguro]:checked').val();
         var transferencia = $("#txtTransferencia").val();
         var disel = $("#txtDisel").val();

@@ -60,13 +60,14 @@ class CartaPorteController extends Controller
             'precioPorTonelada' => $request->precio,
             'precioPorSeguro' => $request->radioSeguro,
             'chofer' => $request->chofer,
+            'porcentaje' => $request->porcentaje,
             'nombre' => '',
             'empresa' => $request->empresa,
-            'identificadorCartaPorte' => $request->txtCartaPorte,
+            'identificadorCartaPorte' => $request->txtCartaPorte == null ? '' : $request->txtCartaPorte,
             'totalFlete' => $request->txtSubTotal,
             'totalEntregado' => $request->txtEntregar,
-            'transferencia' => $request->txtTransferencia,
-            'totalDisel' => $request->txtDisel,
+            'transferencia' => $request->txtTransferencia == null ? '' : $request->txtTransferencia,
+            'totalDisel' => $request->txtDisel == null ? '' : $request->txtDisel,
             'estatusTransferencia' => 'PENDIENTE',
             'facturaChofer' => '',
             'retorno' => 'PENDIENTE',
@@ -74,7 +75,7 @@ class CartaPorteController extends Controller
             'factura' => '0',
             'reFactura' => '0',
             'compro' => 'ANGEL',
-            'remision' => $request->txtRemisiones,
+            'remision' => $request->txtRemisiones == null ? '' : $request->txtRemisiones,
             'entrega' => $request->entrega,
             'estatusPago' => 'PENDIENTE'
         ];
@@ -101,10 +102,13 @@ class CartaPorteController extends Controller
      */
     public function edit($id)
     {
-        //
-        $cartaPorte = CartaPorte::findOrFail($id);
+        //        
+        $datos['choferes'] = Chofer::all();
+        $datos['empresas'] = Empresa::all();
+        $datos['lugares'] = LugarEntrega::all();
+        $datos['cartaPorte'] = CartaPorte::findOrFail($id);
 
-        return view('cartaPorte.edit', compact('cartaPorte'));
+        return view('cartaPorte.edit', $datos);
     }
 
     /**
@@ -116,8 +120,34 @@ class CartaPorteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $datosCartaPorte = request()->except(['_token', '_method']);
+        $campos = [
+            'toneladas' => 'required|string|max:100',
+            'precio' => 'required|string|max:100',
+            'chofer' => 'required|string|max:100',
+            'empresa' => 'required|string|max:100',
+            'entrega' => 'required|string|max:100',
+        ];
+        $mensaje = [
+            'required' => 'El campo :attribute es requerido'
+        ];
+        $this->validate($request, $campos, $mensaje);
+        
+        $datosCartaPorte = [
+            'toneladas' => $request->toneladas,
+            'precioPorTonelada' => $request->precio,
+            'precioPorSeguro' => $request->radioSeguro,
+            'chofer' => $request->chofer,
+            'porcentaje' => $request->porcentaje,            
+            'empresa' => $request->empresa,
+            'identificadorCartaPorte' => $request->txtCartaPorte == null ? '' : $request->txtCartaPorte,
+            'totalFlete' => $request->txtSubTotal,
+            'totalEntregado' => $request->txtEntregar,
+            'transferencia' => $request->txtTransferencia == null ? '' : $request->txtTransferencia,
+            'totalDisel' => $request->txtDisel == null ? '' : $request->txtDisel,                                                    
+            'remision' => $request->txtRemisiones == null ? '' : $request->txtRemisiones,
+            'entrega' => $request->entrega          
+        ];
+        
         CartaPorte::where('id', '=', $id)->update($datosCartaPorte);
 
         return redirect('sinFacturar')->with('mensaje', 'Registro Actualizado Correctamente');

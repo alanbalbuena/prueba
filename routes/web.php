@@ -21,10 +21,10 @@ Route::resource('cartaPorte', CartaPorteController::class)->middleware('auth');
 Auth::routes(['register'=>false,'reset'=>false]);
 //Auth::routes();
 
-Route::get('/home', [ChoferController::class, 'index'])->name('home');
+Route::get('/home', [CartaPorteController::class, 'sinFacturar'])->name('sinFacturar');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', [ChoferController::class, 'index'])->name('home');   
+    Route::get('/', [CartaPorteController::class, 'sinFacturar'])->name('sinFacturar');   
     Route::get('/sinFacturar', [CartaPorteController::class, 'sinFacturar'])->name('sinFacturar');                               
     Route::get('/facturadas', [CartaPorteController::class, 'index'])->name('facturadas'); 
 });
