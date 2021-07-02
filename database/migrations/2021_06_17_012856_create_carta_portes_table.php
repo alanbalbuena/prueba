@@ -19,6 +19,7 @@ class CreateCartaPortesTable extends Migration
             $table->string('precioPorTonelada');
             $table->string('precioPorSeguro');
             $table->string('chofer');
+            $table->string('asignado');
             $table->string('porcentaje');
             $table->string('nombre');
             $table->string('empresa');

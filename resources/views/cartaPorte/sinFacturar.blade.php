@@ -12,8 +12,13 @@
         </div>
         @endif
     </div>
-    <h1>Sin Facturar</h1>
-    <a class="btn btn-success" href="{{ url('cartaPorte/create')}}">Nuevo Registro</a><br><br>
+    <h1>Sin Facturar {{ request()->segment(count(request()->segments())) }}</h1>
+    <a class="btn btn-success" href="{{ url('cartaPorte/create')}}">Nuevo Registro</a>
+    <a class="btn btn-primary" href="{{ url('sinFacturar/empresa')}}">EMPRESA</a>
+    <a class="btn btn-primary" href="{{ url('sinFacturar/chio')}}">CHIO</a>
+    <a class="btn btn-primary" href="{{ url('sinFacturar/edgar')}}">EDGAR</a>
+    <a class="btn btn-primary" href="{{ url('sinFacturar/angel')}}">ANGEL</a>
+    <a class="btn btn-primary" href="{{ url('sinFacturar/nadie')}}">NADIE</a><br><br>
     <table class="table table-hover table-sm table-responsive table-light">
         <thead class="thead-light">
             <tr>
@@ -28,6 +33,7 @@
                 <th>$/SEG</th>
                 <th>FLETE</th>
                 <th>ENTREGADO</th>
+                <th>ASIGNADO</th>
                 <th>FACTURA</th>
                 <th></th>
                 <th></th>
@@ -47,6 +53,7 @@
                 <td> {{ $cartaPorte->precioPorSeguro }} </td>
                 <td> {{ $cartaPorte->totalFlete }} </td>
                 <td> {{ $cartaPorte->totalEntregado }} </td>
+                <td> {{ $cartaPorte->asignado }} </td>
                 <td> {{ $cartaPorte->factura }} </td>
                 <td><a class="btn btn-warning btn-sm" href="{{ url('/cartaPorte/'. $cartaPorte->id.'/edit')}}">Editar</a></td>
                 <td>
@@ -61,5 +68,6 @@
         </tbody>
     </table>
     {!! $cartaPortes->links() !!}
+    <H1>Saldo : $ {{ $dinero }}</H1>
 </div>
 @endsection

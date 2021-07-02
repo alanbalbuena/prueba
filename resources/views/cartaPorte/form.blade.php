@@ -1,4 +1,4 @@
-<h1>{{ $modo }} Registro</h1>
+<h1>{{ $modo }} Registro </h1>
 
 @if(count($errors)>0)
 <div class="alert alert-danger" role="alert">
@@ -53,7 +53,7 @@
             <input type="radio" name="radioSeguro" value="35">35
         </label>
         <label class="radio-inline">
-            <input type="radio" name="radioSeguro" value="65">65
+            <input type="radio" name="radioSeguro" value="45">45
         </label>
     </div>
 </div>
@@ -88,6 +88,17 @@
     </div>
 </div>
 <div class="form-row">
+<div class="form-group col-md-12">
+<select class="custom-select" id="txtAsignado" name="txtAsignado" value="{{ isset($cartaPorte->asignado) ? $cartaPorte->asignado : old('txtAsignado')}}">
+  <option selected>Asignado a</option>
+  <option {{ isset($cartaPorte->asignado) ? ($cartaPorte->asignado == 'EMPRESA' ? 'selected' : '') : '' }} value="EMPRESA">EMPRESA</option>
+  <option {{ isset($cartaPorte->asignado) ? ($cartaPorte->asignado == 'CHIO' ? 'selected' : '') : '' }} value="CHIO">CHIO</option>
+  <option {{ isset($cartaPorte->asignado) ? ($cartaPorte->asignado == 'EDGAR' ? 'selected' : '') : '' }} value="EDGAR">EDGAR</option>
+  <option {{ isset($cartaPorte->asignado) ? ($cartaPorte->asignado == 'ANGEL' ? 'selected' : '') : '' }}  value="ANGEL">ANGEL</option>
+</select>
+</div>
+</div>
+<div class="form-row">
     <label class="col-sm-3 col-form-label">Sub Total</label>
     <div class="form-group col-md-9">
         <input type="number" class="form-control" id="txtSubTotal" placeholder="Sub Total" name="txtSubTotal" readonly>
@@ -111,9 +122,15 @@
         <input type="number" class="form-control" id="txtEntregar" name="txtEntregar" placeholder="Entregar" readonly>
     </div>
 </div>
+<div class="form-row">
+    <label class="col-sm-3 col-form-label">Factura</label>
+    <div class="form-group col-md-9 ">
+        <input type="number" class="form-control" id="factura" name="factura" placeholder="Factura" value="{{ isset($cartaPorte->factura) ? $cartaPorte->factura : old('factura')}}">
+    </div>
+</div>
 
 <input class="btn btn-success" type="submit" value="{{ $modo }}">
-<a class="btn btn-primary" href="{{ url('sinFacturar/')}}">Regresar</a>
+<a class="btn btn-primary" href="{{ url()->previous() }}">Regresar</a>
 
 <script>
     $(document).ready(function() {

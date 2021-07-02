@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\CartaPorte;
 use App\Models\Chofer;
 use App\Models\Empresa;
 use App\Models\LugarEntrega;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CartaPorteController extends Controller
 {
@@ -54,7 +56,7 @@ class CartaPorteController extends Controller
             'required' => 'El campo :attribute es requerido'
         ];
         $this->validate($request, $campos, $mensaje);
-        
+
         $datos = [
             'toneladas' => $request->toneladas,
             'precioPorTonelada' => $request->precio,
@@ -74,13 +76,14 @@ class CartaPorteController extends Controller
             'fecha' => now(),
             'factura' => '0',
             'reFactura' => '0',
-            'compro' => 'ANGEL',
+            'compro' => Auth::user()->name,
             'remision' => $request->txtRemisiones == null ? '' : $request->txtRemisiones,
+            'asignado' => $request->txtAsignado == null ? '' : $request->txtAsignado,
             'entrega' => $request->entrega,
             'estatusPago' => 'PENDIENTE'
         ];
         CartaPorte::insert($datos);
-        return redirect('sinFacturar')->with('mensaje', 'Registro Agregado Correctamente');
+        return redirect('sinFacturar/empresa')->with('mensaje', 'Registro Agregado Correctamente');
     }
 
     /**
@@ -131,26 +134,27 @@ class CartaPorteController extends Controller
             'required' => 'El campo :attribute es requerido'
         ];
         $this->validate($request, $campos, $mensaje);
-        
+
         $datosCartaPorte = [
             'toneladas' => $request->toneladas,
             'precioPorTonelada' => $request->precio,
             'precioPorSeguro' => $request->radioSeguro,
             'chofer' => $request->chofer,
-            'porcentaje' => $request->porcentaje,            
+            'porcentaje' => $request->porcentaje,
             'empresa' => $request->empresa,
             'identificadorCartaPorte' => $request->txtCartaPorte == null ? '' : $request->txtCartaPorte,
             'totalFlete' => $request->txtSubTotal,
             'totalEntregado' => $request->txtEntregar,
             'transferencia' => $request->txtTransferencia == null ? '' : $request->txtTransferencia,
-            'totalDisel' => $request->txtDisel == null ? '' : $request->txtDisel,                                                    
+            'totalDisel' => $request->txtDisel == null ? '' : $request->txtDisel,
             'remision' => $request->txtRemisiones == null ? '' : $request->txtRemisiones,
-            'entrega' => $request->entrega          
+            'asignado' => $request->txtAsignado == null ? '' : $request->txtAsignado,
+            'entrega' => $request->entrega,
+            'factura' => $request->factura
         ];
-        
-        CartaPorte::where('id', '=', $id)->update($datosCartaPorte);
 
-        return redirect('sinFacturar')->with('mensaje', 'Registro Actualizado Correctamente');
+        CartaPorte::where('id', '=', $id)->update($datosCartaPorte);        
+        return redirect('sinFacturar/empresa')->with('mensaje', 'Registro Actualizado Correctamente');
     }
 
     /**
@@ -161,15 +165,24 @@ class CartaPorteController extends Controller
      */
     public function destroy($id)
     {
-        //
-
         CartaPorte::destroy($id);
-        return redirect('sinFacturar')->with('mensaje', 'Registro Eliminado Correctamente');
+        return redirect('sinFacturar/empresa')->with('mensaje', 'Registro Eliminado Correctamente');
     }
 
-    public function sinFacturar()
+    public function sinFacturar($id)
     {
-        $datos['cartaPortes'] = CartaPorte::where('factura', '0')->paginate(5);        
+        if ($id == 'nadie') {
+            $datos['cartaPortes'] = CartaPorte::orderBy('id', 'desc')->where('asignado', '')->paginate(5);
+        } else if ($id == 'empresa') {
+            $datos['cartaPortes'] = CartaPorte::orderBy('id', 'desc')->where('asignado', $id)->where('factura', '0')->paginate(5);
+        } else {
+            $datos['cartaPortes'] = CartaPorte::orderBy('id', 'desc')->where('asignado', $id)->paginate(5);
+        }
+        $datos['dinero'] = DB::table('carta_portes')
+            ->where('estatusPago', '!=', 'CANCELADA')
+            ->whereDate('fecha', '>', '2020-01-23')
+            ->sum('totalEntregado');
+        //$datos['cartaPortes'] = CartaPorte::where('factura', '0')->paginate(5); 
         return view('cartaPorte.sinFacturar', $datos);
     }
 }

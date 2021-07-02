@@ -14,7 +14,7 @@
         @endif
     </div>
     <h1>Facturadas</h1>
-    <a class="btn btn-success" href="{{ url('sinFacturar/create')}}" hidden>Nuevo Registro</a><br><br>
+    <a class="btn btn-success" href="{{ url('cartaPorte/create')}}" hidden>Nuevo Registro</a><br><br>
     <div class="table-responsive">
         <table class="table table-hover table-light table-sm">
             <thead class="thead-light">
@@ -58,10 +58,10 @@
                     <td> {{ $cartaPorte->remision }}</td>
                     <td> {{ $cartaPorte->entrega }}</td>
                     <td> {{ $cartaPorte->estatusPago }}</td>
-                    <td><a class="btn btn-warning btn-sm" href="{{ url('/sinFacturar/'. $cartaPorte->id.'/edit')}}">Editar</a></td>
+                    <td><a class="btn btn-warning btn-sm" href="{{ url('/cartaPorte/'. $cartaPorte->id.'/edit')}}">Editar</a></td>
                     <td>
 
-                        <form action="{{ url('/sinFacturar/'.$cartaPorte->id) }}" method="POST">
+                        <form action="{{ url('/cartaPorte/'.$cartaPorte->id) }}" method="POST">
                             @csrf
                             {{method_field('DELETE')}}
                             <input class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Estas seguro que quieres eliminar?')" value="Eliminar">

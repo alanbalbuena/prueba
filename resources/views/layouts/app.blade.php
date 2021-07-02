@@ -27,7 +27,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ route('sinFacturar') }}">
+                <a class="navbar-brand" href="{{ route('sinFacturar',['id'=>'empresa']) }}">
                     Resma
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -38,13 +38,19 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('sinFacturar') }}">{{ __('Sin Facturar') }}</a>
+                            <a class="nav-link" href="{{ route('sinFacturar',['id'=>'empresa']) }}">{{ __('Sin Facturar') }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('facturadas') }}">{{ __('Facturadas') }}</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('chofer.index') }}">{{ __('Choferes') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('efectivo.index') }}">{{ __('Efectivo') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('prestamo.index') }}">{{ __('Prestamos') }}</a>
                         </li>
                     </ul>
 

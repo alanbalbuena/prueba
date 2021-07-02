@@ -15,7 +15,7 @@ class ChoferController extends Controller
     public function index()
     {
         //
-        $datos['choferes'] = Chofer::paginate(5);
+        $datos['choferes'] = Chofer::orderBy('id', 'desc')->paginate(5);
         return view('chofer.index', $datos);
     }
 
@@ -37,8 +37,7 @@ class ChoferController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {        
         $campos = [
             'nombre'=>'required|string|max:100',
             'codigo'=>'required|string|max:100',
