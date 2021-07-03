@@ -108,8 +108,9 @@ class PrestamoController extends Controller
      * @param  \App\Models\Prestamo  $prestamo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Prestamo $prestamo)
+    public function destroy( $id)
     {
-        //
+        Prestamo::destroy($id);
+        return redirect('prestamo')->with('mensaje', 'Prestamo Eliminado Correctamente');
     }
 }

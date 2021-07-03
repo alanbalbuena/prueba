@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Efectivo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EfectivoController extends Controller
 {
@@ -14,7 +15,8 @@ class EfectivoController extends Controller
      */
     public function index()
     {
-        $datos['efectivos'] = Efectivo::orderBy('id', 'desc')->paginate(5);        
+        $datos['efectivos'] = Efectivo::orderBy('id', 'desc')->paginate(5); 
+        $datos['dinero'] = EfectivoController::obtenerDinero();       
         return view('efectivo.index', $datos);
     }
 
@@ -102,5 +104,20 @@ class EfectivoController extends Controller
     {
         Efectivo::destroy($id);
         return redirect('efectivo')->with('mensaje', 'Registro Eliminado Correctamente');
+    }
+
+    static function obtenerDinero(){
+        $ingreso =      DB::table('efectivos')->where('tipo','=','INGRESO')->sum('cantidad');
+        $gasto =        DB::table('efectivos')->where('tipo','=','GASTO')->sum('cantidad');
+        $prestamos =    DB::table('prestamos')->where('estatus','=','PENDIENTE')->sum('cantidad');
+        $cartaPortes =  DB::table('carta_portes')
+                            ->where('estatusPago', '!=', 'CANCELADA')
+                            ->whereDate('fecha', '>', '2020-01-23')
+                            ->sum('totalEntregado');
+
+
+        $datos['dinero'] = $ingreso - $gasto - $prestamos - $cartaPortes;
+
+        return $datos['dinero'];
     }
 }

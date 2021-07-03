@@ -8,7 +8,6 @@ use App\Models\Chofer;
 use App\Models\Empresa;
 use App\Models\LugarEntrega;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class CartaPorteController extends Controller
 {
@@ -19,7 +18,7 @@ class CartaPorteController extends Controller
      */
     public function index()
     {
-        $datos['cartaPortes'] = CartaPorte::orderBy('id', 'desc')->paginate(5);
+        $datos['cartaPortes'] = CartaPorte::orderBy('id', 'desc')->paginate(5);        
         return view('cartaPorte.index', $datos);
     }
 
@@ -177,12 +176,8 @@ class CartaPorteController extends Controller
             $datos['cartaPortes'] = CartaPorte::orderBy('id', 'desc')->where('asignado', $id)->where('factura', '0')->paginate(5);
         } else {
             $datos['cartaPortes'] = CartaPorte::orderBy('id', 'desc')->where('asignado', $id)->paginate(5);
-        }
-        $datos['dinero'] = DB::table('carta_portes')
-            ->where('estatusPago', '!=', 'CANCELADA')
-            ->whereDate('fecha', '>', '2020-01-23')
-            ->sum('totalEntregado');
-        //$datos['cartaPortes'] = CartaPorte::where('factura', '0')->paginate(5); 
+        }       
+    
         return view('cartaPorte.sinFacturar', $datos);
-    }
+    }    
 }

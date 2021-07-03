@@ -67,7 +67,6 @@
             @endforeach
         </tbody>
     </table>
-    {!! $cartaPortes->links() !!}
-    <H1>Saldo : $ {{ $dinero }}</H1>
+    {!! $cartaPortes->links() !!}    
 </div>
 @endsection

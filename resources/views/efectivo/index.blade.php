@@ -53,5 +53,6 @@
         </table>
         {!! $efectivos->links() !!}
     </div>
+    <H1 >Saldo : $ {{ $dinero }}</H1> 
 </div>
 @endsection
