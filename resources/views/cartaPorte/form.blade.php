@@ -125,7 +125,13 @@
 <div class="form-row">
     <label class="col-sm-3 col-form-label">Factura</label>
     <div class="form-group col-md-9 ">
-        <input type="number" class="form-control" id="factura" name="factura" placeholder="Factura" value="{{ isset($cartaPorte->factura) ? $cartaPorte->factura : old('factura')}}">
+        <input type="text" class="form-control" id="factura" name="factura" placeholder="Factura" value="{{ isset($cartaPorte->factura) ? $cartaPorte->factura : old('factura')}}">
+    </div>
+</div>
+<div class="form-row">
+    <label class="col-sm-3 col-form-label">Re Factura</label>
+    <div class="form-group col-md-9 ">
+        <input type="text" class="form-control" id="reFactura" name="reFactura" placeholder="reFactura" value="{{ isset($cartaPorte->reFactura) ? $cartaPorte->reFactura : old('reFactura')}}">
     </div>
 </div>
 

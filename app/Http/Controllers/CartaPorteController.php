@@ -150,7 +150,8 @@ class CartaPorteController extends Controller
             'remision' => $request->txtRemisiones == null ? '' : $request->txtRemisiones,
             'asignado' => $request->txtAsignado == null ? '' : $request->txtAsignado,
             'entrega' => $request->entrega,
-            'factura' => $request->factura
+            'factura' => $request->factura,
+            'reFactura' => $request->reFactura == null ? '0' : $request->reFactura
         ];
 
         CartaPorte::where('id', '=', $id)->update($datosCartaPorte);        
