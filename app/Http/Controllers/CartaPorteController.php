@@ -8,6 +8,7 @@ use App\Models\Chofer;
 use App\Models\Empresa;
 use App\Models\LugarEntrega;
 use Illuminate\Http\Request;
+use PhpParser\Builder\Function_;
 
 class CartaPorteController extends Controller
 {
@@ -180,4 +181,13 @@ class CartaPorteController extends Controller
     
         return view('cartaPorte.sinFacturar', $datos);
     }    
+
+    
+    public function buscar()
+    {
+        $texto = $_GET['query'];
+        $datos['cartaPortes'] = CartaPorte::orderBy('id', 'desc')->where('factura', 'like', '%'. $texto . '%')->paginate(5);
+        $datos['texto'] = $texto;
+        return view('cartaPorte.index', $datos);
+    }
 }

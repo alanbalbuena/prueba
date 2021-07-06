@@ -15,6 +15,10 @@
     </div>
     <h1>Facturadas</h1>
     <a class="btn btn-success" href="{{ url('cartaPorte/create')}}" hidden>Nuevo Registro</a><br><br>
+    <form class="form-inline" action="{{ url('/buscar')}}" type="get">
+        <input class="form-control mb-2 mr-sm-2" type="text" id="texto" placeholder="Buscar registro" name="query" value="{{ isset($texto) ? $texto : old('texto')}}">
+        <button class="btn btn-primary mb-2" type="submit">Buscar</button>
+    </form>
     <div class="table-responsive">
         <table class="table table-hover table-light table-sm">
             <thead class="thead-light">

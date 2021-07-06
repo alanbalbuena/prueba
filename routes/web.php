@@ -38,6 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
     //Route::get('/', [CartaPorteController::class, 'sinFacturar'])->name('sinFacturar');   
     Route::get('/sinFacturar/{id}', [CartaPorteController::class, 'sinFacturar'])->name('sinFacturar');                               
     Route::get('/facturadas', [CartaPorteController::class, 'index'])->name('facturadas'); 
-    Route::get('/miruta/{id}', [CartaPorteController::class, 'miruta'])->name('miruta');                               
+    
+    Route::get('/buscar', [CartaPorteController::class, 'buscar'])->name('buscar');   
 });
 
