@@ -112,6 +112,7 @@ class EfectivoController extends Controller
         $prestamos =    DB::table('prestamos')->where('estatus','=','PENDIENTE')->sum('cantidad');
         $cartaPortes =  DB::table('carta_portes')
                             ->where('estatusPago', '!=', 'CANCELADA')
+                            ->where('asignado', '=', 'EMPRESA')
                             ->whereDate('fecha', '>', '2020-01-23')
                             ->sum('totalEntregado');
 

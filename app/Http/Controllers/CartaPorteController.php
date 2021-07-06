@@ -184,10 +184,15 @@ class CartaPorteController extends Controller
     }    
 
     
-    public function buscar()
-    {
-        $texto = $_GET['query'];
-        $datos['cartaPortes'] = CartaPorte::orderBy('id', 'desc')->where('factura', 'like', '%'. $texto . '%')->paginate(5);
+    public function buscar(Request $request)
+    {                            
+        $texto = $request->texto;  
+        $datos['cartaPortes'] = CartaPorte::orderBy('id', 'desc')
+                                            ->where('factura', 'like', '%'. $texto . '%')
+                                            ->orWhere('reFactura', 'like', '%'. $texto . '%')
+                                            ->orWhere('toneladas', 'like', '%'. $texto . '%')
+                                            ->orWhere('remision', 'like', '%'. $texto . '%')
+                                            ->paginate(5);
         $datos['texto'] = $texto;
         return view('cartaPorte.index', $datos);
     }
