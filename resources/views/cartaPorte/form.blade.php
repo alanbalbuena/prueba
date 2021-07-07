@@ -50,10 +50,10 @@
             <input type="radio" name="radioSeguro" value="0" checked>0
         </label>
         <label class="radio-inline">
-            <input type="radio" name="radioSeguro" value="35">35
+            <input type="radio" name="radioSeguro" value="45">45
         </label>
         <label class="radio-inline">
-            <input type="radio" name="radioSeguro" value="45">45
+            <input type="radio" name="radioSeguro" value="80">80
         </label>
     </div>
 </div>
