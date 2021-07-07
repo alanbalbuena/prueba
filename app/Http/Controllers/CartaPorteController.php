@@ -75,7 +75,7 @@ class CartaPorteController extends Controller
             'retorno' => 'PENDIENTE',
             'fecha' => now(),
             'factura' => '0',
-            'reFactura' => '0',
+            'reFactura' => $request->reFactura == null ? '0' : $request->reFactura,
             'compro' => Auth::user()->name,
             'remision' => $request->txtRemisiones == null ? '' : $request->txtRemisiones,
             'asignado' => $request->txtAsignado == null ? '' : $request->txtAsignado,
