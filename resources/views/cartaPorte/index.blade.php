@@ -31,7 +31,8 @@
                     <th>EMPRESA</th>
                     <th>CP</th>
                     <th>SUBTOTAL</th>
-                    <th>$ENTREGADO</th>
+                    <th>ENTREGADO</th>
+                    <th>TRANSFERENCIA</th>
                     <th>DISEL</th>
                     <th>FECHA</th>
                     <th>FACTURA</th>
@@ -45,7 +46,7 @@
             </thead>
             <tbody>
                 @foreach($cartaPortes as $cartaPorte)
-                <tr>
+                <tr class="{{ $cartaPorte->estatusPago == 'PAGADA' ? 'table-success' : ($cartaPorte->estatusPago == 'CANCELADA' ? 'table-danger': '')}}">
                     <td> {{ $cartaPorte->id }} </td>
                     <td> {{ $cartaPorte->toneladas }}</td>
                     <td> {{ $cartaPorte->precioPorTonelada }}</td>
@@ -55,6 +56,7 @@
                     <td> {{ $cartaPorte->identificadorCartaPorte }}</td>
                     <td> {{ $cartaPorte->totalFlete }}</td>
                     <td> {{ $cartaPorte->totalEntregado }}</td>
+                    <td> {{ $cartaPorte->transferencia }}</td>
                     <td> {{ $cartaPorte->totalDisel }}</td>
                     <td> {{ $cartaPorte->fecha }}</td>
                     <td> {{ $cartaPorte->factura }}</td>
@@ -64,7 +66,6 @@
                     <td> {{ $cartaPorte->estatusPago }}</td>
                     <td><a class="btn btn-warning btn-sm" href="{{ url('/cartaPorte/'. $cartaPorte->id.'/edit')}}">Editar</a></td>
                     <td>
-
                         <form action="{{ url('/cartaPorte/'.$cartaPorte->id) }}" method="POST">
                             @csrf
                             {{method_field('DELETE')}}

@@ -8,10 +8,10 @@ use App\Models\Chofer;
 use App\Models\Empresa;
 use App\Models\LugarEntrega;
 use Illuminate\Http\Request;
-use PhpParser\Builder\Function_;
+
 
 class CartaPorteController extends Controller
-{
+{    
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +19,7 @@ class CartaPorteController extends Controller
      */
     public function index()
     {
-        $datos['cartaPortes'] = CartaPorte::orderBy('id', 'desc')->paginate(5);        
+        $datos['cartaPortes'] = CartaPorte::orderBy('id', 'desc')->paginate(100);        
         return view('cartaPorte.index', $datos);
     }
 
@@ -173,11 +173,11 @@ class CartaPorteController extends Controller
     public function sinFacturar($id)
     {
         if ($id == 'nadie') {
-            $datos['cartaPortes'] = CartaPorte::orderBy('id', 'desc')->where('asignado', '')->paginate(5);
+            $datos['cartaPortes'] = CartaPorte::orderBy('id', 'desc')->where('asignado', '')->paginate(100);
         } else if ($id == 'empresa') {
-            $datos['cartaPortes'] = CartaPorte::orderBy('id', 'desc')->where('asignado', $id)->where('factura', '0')->paginate(5);
+            $datos['cartaPortes'] = CartaPorte::orderBy('id', 'desc')->where('asignado', $id)->where('factura', '0')->paginate(100);
         } else {
-            $datos['cartaPortes'] = CartaPorte::orderBy('id', 'desc')->where('asignado', $id)->paginate(5);
+            $datos['cartaPortes'] = CartaPorte::orderBy('id', 'desc')->where('asignado', $id)->paginate(100);
         }       
     
         return view('cartaPorte.sinFacturar', $datos);
@@ -192,7 +192,8 @@ class CartaPorteController extends Controller
                                             ->orWhere('reFactura', 'like', '%'. $texto . '%')
                                             ->orWhere('toneladas', 'like', '%'. $texto . '%')
                                             ->orWhere('remision', 'like', '%'. $texto . '%')
-                                            ->paginate(5);
+                                            ->orWhere('empresa', 'like', '%'. $texto . '%')
+                                            ->paginate(100);
         $datos['texto'] = $texto;
         return view('cartaPorte.index', $datos);
     }
