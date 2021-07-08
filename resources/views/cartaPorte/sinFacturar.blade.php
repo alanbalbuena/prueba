@@ -33,6 +33,8 @@
                 <th>$/SEG</th>
                 <th>FLETE</th>
                 <th>ENTREGADO</th>
+                <th>TRANSFERENCIA</th>
+                <th>DIESEL</th>
                 <th>ASIGNADO</th>
                 <th>FACTURA</th>
                 <th></th>
@@ -53,6 +55,8 @@
                 <td> {{ $cartaPorte->precioPorSeguro }} </td>
                 <td> {{ $cartaPorte->totalFlete }} </td>
                 <td> {{ $cartaPorte->totalEntregado }} </td>
+                <td> {{ $cartaPorte->transferencia }} </td>
+                <td> {{ $cartaPorte->totalDisel }} </td>
                 <td> {{ $cartaPorte->asignado }} </td>
                 <td> {{ $cartaPorte->factura }} </td>
                 <td><a class="btn btn-warning btn-sm" href="{{ url('/cartaPorte/'. $cartaPorte->id.'/edit')}}">Editar</a></td>
