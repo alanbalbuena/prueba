@@ -117,7 +117,7 @@ class EfectivoController extends Controller
                             ->sum('totalEntregado');
 
 
-        $datos['dinero'] = $ingreso - $gasto - $prestamos - $cartaPortes;
+        $datos['dinero'] = round($ingreso - $gasto - $prestamos - $cartaPortes,2) ;
 
         return $datos['dinero'];
     }

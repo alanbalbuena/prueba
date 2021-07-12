@@ -192,9 +192,16 @@ class CartaPorteController extends Controller
                                             ->orWhere('reFactura', 'like', '%'. $texto . '%')
                                             ->orWhere('toneladas', 'like', '%'. $texto . '%')
                                             ->orWhere('remision', 'like', '%'. $texto . '%')
+                                            ->orWhere('identificadorCartaPorte', 'like', '%'. $texto . '%')
+                                            ->orWhere('chofer', 'like', '%'. $texto . '%')
                                             ->orWhere('empresa', 'like', '%'. $texto . '%')
+                                            ->orWhere('totalFlete', 'like', '%'. $texto . '%')
+                                            ->orWhere('totalEntregado', 'like', '%'. $texto . '%')                                            
+                                            ->orWhere('transferencia', 'like', '%'. $texto . '%')
+                                            ->orWhere('totalDisel', 'like', '%'. $texto . '%')
+                                            ->orWhere('estatusPago', 'like', '%'. $texto . '%')                                            
                                             ->paginate(100);
         $datos['texto'] = $texto;
         return view('cartaPorte.index', $datos);
     }
-}
+}          
