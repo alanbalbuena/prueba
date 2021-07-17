@@ -86,7 +86,7 @@ class EfectivoController extends Controller
             'cantidad'=>$request->cantidad,
             'concepto'=>$request->concepto,
             'aplicacion'=>$request->aplicacion,
-            'nota'=>$request->nota,
+            'nota'=>$request->nota == null ? '': $request->nota,
             'tipo'=>$request->tipo
         ];
         

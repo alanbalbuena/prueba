@@ -37,7 +37,7 @@
     <select class="custom-select" id="tipo" name="tipo" value="{{ isset($efectivo->tipo) ? $efectivo->tipo : old('tipo')}}" required>
         <option value="">Tipo</option>
         <option {{ isset($efectivo->tipo) ? ($efectivo->tipo == 'INGRESO' ? 'selected' : '') : '' }} value="INGRESO">INGRESO</option>
-        <option {{ isset($efectivo->tipo) ? ($efectivo->tipo == 'EGRESO' ? 'selected' : '') : ''  }} value="EGRESO">EGRESO</option>
+        <option {{ isset($efectivo->tipo) ? ($efectivo->tipo == 'GASTO' ? 'selected' : '') : ''  }} value="GASTO">GASTO</option>
     </select>
 </div>
 <input class="btn btn-success" type="submit" value="{{ $modo }}">
