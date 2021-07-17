@@ -13,7 +13,7 @@
 @endif
 <div class="form-row">
     <div class="form-group col-md-6">
-        <input class="form-control" placeholder="Cantidad" type="number" , name="cantidad" , id="cantidad" , value="{{ isset($efectivo->cantidad) ? $efectivo->cantidad : old('cantidad')}}" required>
+        <input class="form-control" placeholder="Cantidad" type="number" step=0.01 name="cantidad" , id="cantidad" , value="{{ isset($efectivo->cantidad) ? $efectivo->cantidad : old('cantidad')}}" required>
     </div>
     <div class="form-group col-md-6">
         <input class="form-control" placeholder="Concepto" type="text" , name="concepto" , id="concepto" , value="{{ isset($efectivo->concepto) ? $efectivo->concepto : old('concepto')}}" required>
