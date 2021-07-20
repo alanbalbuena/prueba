@@ -199,6 +199,7 @@ class CartaPorteController extends Controller
                                             ->orWhere('totalEntregado', 'like', '%'. $texto . '%')                                            
                                             ->orWhere('transferencia', 'like', '%'. $texto . '%')
                                             ->orWhere('totalDisel', 'like', '%'. $texto . '%')
+                                            ->orWhere('entrega', 'like', '%'. $texto . '%')
                                             ->orWhere('estatusPago', 'like', '%'. $texto . '%')                                            
                                             ->paginate(100);
         $datos['texto'] = $texto;
