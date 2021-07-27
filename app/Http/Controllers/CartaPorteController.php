@@ -173,7 +173,7 @@ class CartaPorteController extends Controller
     public function sinFacturar($id)
     {
         if ($id == 'nadie') {
-            $datos['cartaPortes'] = CartaPorte::orderBy('id', 'desc')->where('asignado', '')->paginate(100);
+            $datos['cartaPortes'] = CartaPorte::orderBy('id', 'desc')->where('asignado', 'Asignado a')->paginate(100);
         } else if ($id == 'empresa') {
             $datos['cartaPortes'] = CartaPorte::orderBy('id', 'desc')->where('asignado', $id)->where('factura', '0')->paginate(100);
         } else {
